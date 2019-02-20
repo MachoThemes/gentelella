@@ -139,7 +139,11 @@ function init_sidebar() {
         $('.menu_fixed').mCustomScrollbar({
             autoHideScrollbar: true,
             theme: 'minimal',
-            mouseWheel: {preventDefault: true}
+            scrollInertia:600,
+            mouseWheel: {
+                preventDefault: true,
+                scrollAmount: 40
+            }
         });
     }
 };
@@ -5371,5 +5375,5 @@ $(document).ready(function () {
     init_autocomplete();
 
 });
-	
+
 
