@@ -1,5 +1,40 @@
 /**
  * Resize function without multiple trigger
+ * 
+ * Usage:
+ * $(window).smartresize(function(){  
+ *     // code here
+ * });
+ */
+(function($,sr){
+    // debouncing function from John Hann
+    // http://unscriptable.com/index.php/2009/03/20/debouncing-javascript-methods/
+    var debounce = function (func, threshold, execAsap) {
+      var timeout;
+
+        return function debounced () {
+            var obj = this, args = arguments;
+            function delayed () {
+                if (!execAsap)
+                    func.apply(obj, args); 
+                timeout = null; 
+            }
+
+            if (timeout)
+                clearTimeout(timeout);
+            else if (execAsap)
+                func.apply(obj, args);
+
+            timeout = setTimeout(delayed, threshold || 100); 
+        };
+    };
+
+    // smartresize 
+    jQuery.fn[sr] = function(fn){  return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
+
+})(jQuery,'smartresize');
+/**
+ * Resize function without multiple trigger
  *
  * Usage:
  * $(window).smartresize(function(){
@@ -52,6 +87,8 @@ var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
     $NAV_MENU = $('.nav_menu'),
     $FOOTER = $('footer');
 
+
+// TODO: This is some kind of easy fix, maybe we can improve this
 var setContentHeight = function () {
     // reset height
     $RIGHT_COL.css('min-height', $(window).height());
@@ -69,11 +106,17 @@ var setContentHeight = function () {
 
 // Sidebar
 function init_sidebar() {
-// TODO: This is some kind of easy fix, maybe we can improve this
-
+  $('li ul.child_menu').mCustomScrollbar({
+        autoHideScrollbar: true,
+        theme: 'minimal',
+        scrollInertia: 600,
+        mouseWheel: {
+            preventDefault: true,
+            scrollAmount: 40
+        }
+    });
     $SIDEBAR_MENU.find('a').on('click', function (ev) {
         var $li = $(this).parent();
-
         if ($li.is('.active')) {
             $li.removeClass('active active-sm');
             $('ul:first', $li).slideUp(function () {
@@ -81,7 +124,7 @@ function init_sidebar() {
             });
         } else {
             // prevent closing menu if we are on child menu
-            if (!$li.parent().is('.child_menu')) {
+            if (!$li.parent().is('.child_menu') && !$li.parents('.mCustomScrollbar').hasClass('child_menu')) {
                 $SIDEBAR_MENU.find('li').removeClass('active active-sm');
                 $SIDEBAR_MENU.find('li ul').slideUp();
             } else {
@@ -139,7 +182,7 @@ function init_sidebar() {
         $('.menu_fixed').mCustomScrollbar({
             autoHideScrollbar: true,
             theme: 'minimal',
-            scrollInertia:600,
+            scrollInertia: 600,
             mouseWheel: {
                 preventDefault: true,
                 scrollAmount: 40

@@ -221,7 +221,7 @@ html , body{
     width: 100% !important;
     margin-bottom: 5px
 }
-.nav-sm ul.nav.child_menu {
+.nav-sm ul.nav.side-menu > li > ul.nav.child_menu {
     left: 100%;
     position: absolute;
     top: 0;
