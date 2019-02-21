@@ -125,6 +125,10 @@ function init_sidebar() {
             $li.removeClass('active active-sm');
             $('ul:first', $li).slideUp(function () {
                 setContentHeight();
+                if($('.left_col.menu_fixed > .mCustomScrollBox > .mCSB_container ').length){
+                    $('.left_col.menu_fixed > .mCustomScrollBox > .mCSB_container ').css('min-height', '0');
+                }
+
             });
         } else {
             // prevent closing menu if we are on child menu
@@ -141,9 +145,15 @@ function init_sidebar() {
 
             $('ul:first', $li).slideDown(function () {
                 setContentHeight();
+                // fix for fixed sidebar menu
+                if ($('.left_col.menu_fixed > .mCustomScrollBox > .mCSB_container ').length) {
+                    $('.left_col.menu_fixed > .mCustomScrollBox > .mCSB_container ').css('min-height', $(this).outerHeight() + $('.left_col.menu_fixed .left_col').outerHeight());
+                }
             });
         }
+
     });
+
 
 // toggle small or large menu
     $MENU_TOGGLE.on('click', function () {
