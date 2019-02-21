@@ -2065,6 +2065,27 @@ button,
         margin-bottom: 5px;
         display: inline-block
     }
+
+    /* Experimental menu */
+    body.nav-sm .left_col.menu_fixed {
+        width:50% !important;
+    }
+
+    body.nav-sm .top_nav, body.nav-sm .right_col {
+        margin-left:50% !important;
+    }
+
+    .nav-sm .navbar.nav_title {
+        width:100% !important;
+        text-align: center;
+    }
+
+    .nav-sm ul.nav.side-menu > li > ul.nav.child_menu {
+        position: relative;
+        left:0;
+        width:100%;
+    }
+    /* End Experimental menu */
 }
 .mail_heading h4 {
     font-size: 18px;

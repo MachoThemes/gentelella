@@ -1,0 +1,949 @@
+ <!DOCTYPE html>
+ <html lang="en">
+
+ <head>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     <!-- Meta, title, CSS, favicons, etc. -->
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <title>Sistema de Reserva de Salas \ Gestion de Reservas de Salas</title>
+     <!-- Bootstrap -->
+     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+     <!-- Font Awesome -->
+     <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+     <!-- malihu-custom-scrollbar -->
+     <link href="../vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+     <!-- NProgress -->
+     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+     <!-- Switchery -->
+     <link href="../vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+     <!-- iCheck -->
+     <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+     <!-- select2 -->
+     <link href="../vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+     <!-- <link href="/vendors/select2/dist/css/select2.min.css" rel="stylesheet"> -->
+     <!-- Bootstrap-DateTimePicker -->
+     <link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    
+     <!-- Custom Theme Style -->
+     <link href="../build/css/custom.css" rel="stylesheet">
+    
+     <style>
+     /* TopNav Fixed */
+     .nav-sm .main_container .top_nav,
+     .nav-md .main_container .top_nav {
+     position: fixed;
+     right: 0;
+     left: 0;
+     z-index:4;
+     }
+    
+     .nav-md .container.body .right_col,
+     .nav-sm .container.body .right_col {
+     padding-top: 58px;
+     }
+     /* Sidebar */
+     .nav_title {
+     background: #73879C; /* #73879C */
+     }
+     a#menu_toggle i {
+     color: black; /* #0275d8; */
+     }
+     .nav_menu {
+     background: #EDEDED;
+     }
+     .left_col {
+     /* background: linear-gradient(to bottom right, darkblue, #0275d8); */
+     background: #2A3F54; /* #73879C #337ab7 #2e6da4*/
+     }
+     .nav.side-menu > li.active > a {
+     text-shadow: rgba(0,0,0,.25) 0 -1px 0;
+     background: #0275d8;/* linear-gradient(#334556,#2C4257),#2A3F54; */
+     box-shadow: rgba(0,0,0,.25) 0 1px 0,inset rgba(255,255,255,.16) 0 1px 0;
+     }
+     .nav.side-menu  li.active a {
+     background: #2A3F54;/* linear-gradient(#334556,#2C4257),#2A3F54; */
+     }
+    
+     .sidebar-footer {
+     background: black;
+     }
+     .sidebar-footer a {
+     background: black; /* #172D44 */
+     }
+     body{
+     color: black;
+     }
+     a {
+     color: #0275d8;
+     }
+    
+     /* Logo */
+     .navbar-brand, .navbar-nav > li > a, .site_title {
+     color: white !important;
+     }
+    
+     .img-circle.profile_img {
+     /*Borde sobre la imagen de perfil del sidebar*/
+     background: rgb(255, 255, 255);
+     border-width: 1px;
+     border-top-width: 1px;
+     border-right-width: 1px;
+     border-bottom-width: 1px;
+     border-left-width: 1px;
+    
+     padding: 0.5px;
+     padding-top: 0.5px;
+     padding-right: 0.5px;
+     padding-bottom: 0.5px;
+     padding-left: 0.5px;
+     }
+     .img-circle {
+     border-radius: 50%;
+     }
+     .profile_info span {
+     font-size: 13px;
+     line-height: 30px;
+     color: white;
+     font-weight: 300;
+     }
+     .profile_info h2 {
+     font-size: 14px;
+     color: white;
+     margin: 0;
+     font-weight: 600;
+     }
+    
+     /* Menu Sidebar */
+     .nav.child_menu > li > a, .nav.side-menu > li > a {
+     color: white;
+     font-weight: 500;
+     }
+     .nav.child_menu > li > a {
+     color: white;
+     font-size: 12px;
+     padding: 9px;
+     }
+     /* Menu de Usuario esq sup derecha */
+     .nav.navbar-nav > li > a {
+     color: black !important;
+     }
+     .dropdown-menu > li > a {
+     color: black;
+     }
+     .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+     color: black;
+     text-decoration: none;
+     background-color: #f5f5f5;
+     }
+    
+     /* Color breadcrumbs */
+     .breadcrumb a {
+     color: #0275d8;
+     }
+     .breadcrumb a:focus, a:hover {
+     color: darkblue;
+     text-decoration: underline;
+     }
+     .breadcrumb > .active {
+     color: black;
+     }
+     .breadcrumb > li + li::before {
+     padding: 0 5px;
+     color: black; /* #ccc */
+     content: "/\00a0";
+     }
+    
+     /* Color de texto de controles */
+     body label{
+     color: #172D44;
+     }
+     h3 {
+     font-size: 24px;
+     font-weight: bold;
+     }
+     .x_title h2{}
+     h2 {
+     font-size: 18px;
+     font-weight: bold;
+     }
+     .form-control{
+     -webkit-transition: all 0.30s ease-in-out;
+     -moz-transition: all 0.30s ease-in-out;
+     -ms-transition: all 0.30s ease-in-out;
+     -o-transition: all 0.30s ease-in-out;
+     }
+     .form-control:focus {
+     border-color: none;
+     box-shadow: 0 0 5px rgba(81, 203, 238, 1); /* inset 0 1px 1px rgba(0,0,0,.075) */
+     -webkit-box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+     -moz-box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+     -ms-box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+     outline: -webkit-focus-ring-color auto 5px;
+     }
+     .form-control{
+     color: black;
+     }
+     .numerojqInputMask{
+     text-align:right;
+     }
+     .dateField, .timeField{
+     text-align:center;
+     }
+     /* Control Select2 combo box */
+     .select2-container--default .select2-selection--single .select2-selection__rendered,
+     select.select2 > span.select2-container {
+     color: black;
+     }
+     /* Zebra color items alternado o stripped */
+     ul.select2-results__options li:nth-child(even){
+     background-color: #F2F5F7  ;
+     color: black;
+     }
+     ul.select2-results__options li:nth-child(even):hover{
+     background-color: #5897fb;
+     color: white;
+     }
+    
+     .identado25px{ margin-left: 25px }
+    
+     /*        fieldset{
+   -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+   }
+    
+   legend{
+   border: solid 1px black;
+   -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+   }
+    
+   legend{
+   background: #FF9;
+   border: solid 1px black;
+   -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+   padding: 6px;
+   }*/
+     /*Margen de titulos dentro de cada ficha tab debido a que a veces hay muchas fichas en una fila y la proxima puede ir abajo*/
+     .tab-pane form h4{
+     margin-top: 40px;
+     }
+     /* Panel Heading Links sin subrayado */
+     a.panel-heading:hover{
+     text-decoration: none;
+     }
+     </style>
+    
+     </head>
+
+ <body class="nav-md footer_fixed">
+ <div class="container body">
+     <div class="main_container">
+     <div class="col-md-3 left_col menu_fixed">
+     <div class="left_col scroll-view">
+     <div class="navbar nav_title" style="border: 0;">
+     <a href="#" class="site_title"> <i class="fa fa-paw"></i>  <span> Gentelella Alela! </span></a>
+     </div>
+     <div class="clearfix"></div>
+     <!-- menu profile quick info -->
+     <div class="profile clearfix">
+     <div class="profile_pic">
+     <img src="/uploads/6f3009e2-8b71-4e3e-8883-ec628e60c341.jpg" alt="..." class="img-circle profile_img" onerror="this.onerror=null;this.src='';">
+     </div>
+     <div class="profile_info">
+     <span>Bienvenido,</span>
+     <h2>Martin Murciego</h2>
+     </div>
+     <div class="clearfix"></div>
+     </div>
+     <!-- /menu profile quick info -->                    <br />
+     <!-- sidebar menu -->
+     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+     <div class="menu_section">
+     <h3>General</h3>
+     <ul class="nav side-menu">
+     <li><a href="/"><i class="fa fa-home"></i> Inicio </a></li>
+     </ul>
+     </div>
+     <div class="menu_section">
+     <h3>Modulos</h3>
+     <ul class="nav side-menu sitemaps">
+     <li><a><i class="fa fa-sitemap"></i> Modulos <span class="fa fa-chevron-down"></span></a>
+     <ul class="nav child_menu" style="display: block;">
+         <li class="menu" data-id="2"><a href="#!"><i class="fa fa-book"></i>Reservas</a></li>
+         <li class="menu" data-id="4"><a href="#!"><i class="fa fa-cogs"></i>Parametros</a></li>
+         <li class="menu" data-id="5"><a href="#!"><i class="fa fa-key"></i>Seguridad</a></li>
+        
+         </ul>
+    
+     </li>
+     </ul>
+     <style>
+     .scrollable-menu {
+     height: auto;
+     max-height: 200px;
+     overflow-x: hidden;
+     }
+     </style>
+     </div>
+    
+     </div>
+     <!-- /sidebar menu -->                                <!-- /menu footer buttons -->
+     <div class="sidebar-footer hidden-small">
+     <a class="config-page" data-toggle="tooltip" data-placement="top" title="Configuraciones">
+     <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+     </a>
+     <a class="full-page" data-toggle="tooltip" data-placement="top" title="Pantalla Completa">
+     <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+     </a>
+     <a class="lock-page" data-toggle="tooltip" data-placement="top" title="Bloquear">
+     <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+     </a>
+     <a class="logout" data-toggle="tooltip" data-placement="top" title="Cerrar Sesión" href="#">
+     <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+     </a>
+     </div>
+     <!-- /menu footer buttons -->
+     </div>
+     </div>
+     <!-- /top navigation -->
+     <div class="top_nav">
+     <div class="nav_menu">
+     <nav>
+     <div class="nav toggle">
+     <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+     </div>
+    
+     <ul class="nav navbar-nav navbar-right">
+     <li class="">
+     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+     <img src="/uploads/6f3009e2-8b71-4e3e-8883-ec628e60c341.jpg" alt="" onerror="this.onerror=null;this.src='';">Martin Murciego
+     <span class=" fa fa-angle-down"></span>
+     </a>
+     <ul class="dropdown-menu dropdown-usermenu pull-right">
+     <li><a href="javascript:;"><i class="fa fa-user"></i> Perfil</a></li>
+     <li>
+     <a href="javascript:;">
+     <i class="fa fa-cogs"></i> Configuraciones
+     </a>
+     </li>
+     <li><a href="javascript:;"><i class="fa fa-question-circle"></i> Ayuda</a></li>
+     <li role="separator" class="divider"></li>
+     <li><a class="logout" href="#"><i class="fa fa-sign-out pull-left"></i> Cerrar Sesión</a></li>
+     </ul>
+     </li>
+     </ul>
+     </nav>
+     </div>
+     </div>
+     <!-- /top navigation -->            <!-- page content -->
+     <div class="right_col" role="main">
+     <div class="">
+     <div class="title_left">
+     <h3>Gestion de Reservas de Salas</h3>
+     <ol class="breadcrumb card">
+     <li><a href="#">Inicio</a></li>
+     <li><a href="#">Level One</a></li>
+     <li class="active">Level One</li>
+     </ol>                      </div>
+    
+     </div>
+     <div class="clearfix"></div>
+     <div class="row">
+     <div class="col-md-10 col-lg-10 col-sm-7">
+     <div class="x_panel">
+     <div class="x_title">
+     <h2>Gestion de Reservas de Salas</h2>
+     <ul class="nav navbar-right panel_toolbox">
+     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+     </li>
+     <li class="dropdown">
+     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+     <ul class="dropdown-menu" role="menu">
+     <li><a href="#">Configuraciones...</a>
+     </li>
+     <li><a href="#">Otras...</a>
+     </li>
+     </ul>
+     </li>
+     <li><a class="close-link"><i class="fa fa-close"></i></a>
+     </li>
+     </ul>
+     <div class="clearfix"></div>
+     </div>
+     <!-- Paneles collapsibles -->
+    
+     <div class="x_content">
+     <!-- Paneles collapsibles Accordions en gris-->
+     <!-- start accordion -->
+     <div class="accordion" id="accordionReserva" role="tablist" aria-multiselectable="true">
+     <div class="panel panel-info">
+     <a class="panel-heading collapsed" role="tab" id="headingEvento" data-toggle="collapse" data-parent="#accordionReserva" href="#collapseEvento" aria-expanded="false" aria-controls="collapseOne">
+     <h4 class=""><i class="fa fa-users"></i> Evento</h4>
+     </a>
+     <div id="collapseEvento" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEvento" aria-expanded="false" style="height: 0px;">
+     <div class="panel-body">
+     <form class="form-vertical" id="formEvento">
+     <div class="form-group">
+     <label for="inputId" hidden>id</label>
+     <input type="hidden" id="inputId" class="form-control" name="id" hidden>
+     </div>
+     <div class="form-group">
+     <div class="input-group col-sm-12" id="inputgroupEventoTitulo">
+     <label class="requiredField" for="inputEventoTitulo">Evento <span class="asterixField" style="color:red">(*)</span></label>
+     <input type="text" id="inputEventoTitulo" class="form-control" name="eventoTitulo" required="">
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-12" id="inputgroupDescripcionEvento">
+     <label for="textAreaDescripcionEvento">Descripción</label>
+     <textarea id="textAreaDescripcionEvento" required="required" class="resizable_textarea form-control" name="descripcionEvento" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Ingrese descripcion del evento a realizar..." data-parsley-validation-threshold="10"></textarea>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-5">
+     <label for="inputFechaInicioEvento">Fec. Inicio</label>
+     <div class="input-group date col-sm-5" id="inputGroupFechaInicioEvento">
+     <input type="text" class="form-control dateField" id="inputFechaInicioEvento" name="fechaInicioEvento">
+     <span class="input-group-addon">
+   <span class="fa fa-calendar-o"></span>
+   </span>
+     </div>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-5">
+     <label for="inputHoraInicioEvento">Hora Inicio</label>
+     <div class="input-group date col-sm-5" id="inputGroupHoraInicioEvento">
+     <input type="text" class="form-control timeField" id="inputHoraInicioEvento" name="horaInicioEvento">
+     <span class="input-group-addon">
+   <span class="fa fa-clock-o"></span>
+   </span>
+     </div>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-5">
+     <label for="inputFechaFinEvento">Fec. Fin</label>
+     <div class="input-group date col-sm-5" id="inputGroupFechaFinEvento">
+     <input type="text" class="form-control dateField" id="inputFechaFinEvento" name="fechaFinEvento">
+     <span class="input-group-addon">
+   <span class="fa fa-calendar-o"></span>
+   </span>
+     </div>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-5">
+     <label for="inputHoraFinEvento">Hora Fin</label>
+     <div class="input-group date col-sm-5" id="inputGroupHoraFinEvento">
+     <input type="text" class="form-control timeField" id="inputHoraFinEvento" name="horaFinEvento">
+     <span class="input-group-addon">
+   <span class="fa fa-clock-o"></span>
+   </span>
+     </div>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-12" id="inputGroupTipoEvento">
+     <label for="selectTipoEvento">Tipo de Evento <span class="asterixField" style="color:red">(*)</span></label> <br>
+     <select id="selectTipoEvento" class="campo select2Control form-control" name="direccion1Pais" tabindex="-1" aria-hidden="true">
+     </select>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <label>
+     <input id="checkEventoPublico" name="esEventoPublico" type="checkbox" class="js-switch campo" unchecked="unchecked" data-switchery="true"> Evento publico?
+     </label>
+     </div>
+     <br>
+     </form>
+     </div>
+     </div>
+     </div>
+     <div class="panel panel-info">
+     <a class="panel-heading collapsed" role="tab" id="headingOrganizador" data-toggle="collapse" data-parent="#accordionReserva" href="#collapseOrganizador" aria-expanded="false" aria-controls="collapseOrganizador">
+     <h4 class=""><i class="fa fa-user"></i> Organizador de Evento</h4>
+     </a>
+     <div id="collapseOrganizador" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOrganizador" aria-expanded="false" style="height: 0px;">
+     <div class="panel-body">
+     <!-- contenido panel accordion -->
+     <form class="form-vertical" id="formOrganizador" >
+     <div class="form-group">
+     <div class="input-group col-sm-12" id="inputGroupOrganizador">
+     <label for="selectOrganizador">Organizador <span class="asterixField" style="color:red">(*)</span></label> <br>
+     <select id="selectOrganizador" class="form-control select2Control campo" name="organizador" tabindex="-1">
+     </select>
+     </div>
+     </div>
+     <br>
+     </form>
+     </div>
+     </div>
+     </div>
+     <div class="panel panel-info">
+     <a class="panel-heading" role="tab" id="headingSolicitanteReserva" data-toggle="collapse" data-parent="#accordionReserva" href="#collapseSolicitanteReserva" aria-expanded="false" aria-controls="collapseSolicitanteReserva">
+     <h4 class=""><i class="fa fa-user"></i> Solicitante de Reserva</h4>
+     </a>
+     <div id="collapseSolicitanteReserva" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSolicitanteReserva" aria-expanded="true" style="">
+     <div class="panel-body">
+     <!-- contenido panel accordion -->
+     <form class="form-vertical" id="formSolicitante" >
+     <div class="form-group">
+     <div class="input-group col-sm-12" id="inputGroupSolicitanteReserva">
+     <label for="selectSolicitanteReserva">Solicitante <span class="asterixField" style="color:red">(*)</span></label><br>
+     <select id="selectSolicitanteReserva" class="form-control select2Control campo" name="solicitanteReserva" tabindex="-1">
+     </select>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <label>
+     <input id="checkEsPersonaJuridica" name="esPersonaJuridica" type="checkbox" class="js-switch campo" unchecked="unchecked" data-switchery="true"> Es Persona Jurídica?
+     </label>
+     </div>
+     <br>
+     <div class="form-group">
+     <label>
+     <input id="checkSolicitaAutoridadGub" name="solicitaAutoridadGub" type="checkbox" class="js-switch campo" unchecked="unchecked" data-switchery="true"> Solicita autoridad Gubernamental?
+     </label>
+     </div>
+    
+     </form>
+     </div>
+     </div>
+     </div>
+     <div class="panel panel-info">
+     <a class="panel-heading collapsed" role="tab" id="headingRepresentanteSolicitante" data-toggle="collapse" data-parent="#accordionReserva" href="#collapseRepresentanteSolicitante" aria-expanded="false" aria-controls="collapseRepresentanteSolicitante">
+     <h4 class=""><i class="fa fa-user"></i> Representante de Reserva</h4>
+     </a>
+     <div id="collapseRepresentanteSolicitante" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingRepresentanteSolicitante" aria-expanded="false" style="height: 0px;">
+     <div class="panel-body">
+     <form class="form-vertical" id="formRepresentante" >
+     <div class="form-group">
+     <div class="input-group col-sm-12" id="inputGroupRepresSolicitReserva">
+     <label for="selectRepresSolicitReserva">Representante </label><br>
+     <select id="selectRepresSolicitReserva" class="form-control select2Control campo" name="represSolicitReserva" tabindex="-1">
+     </select>
+     </div>
+     </div>
+     <br>
+     </form>
+     </div>
+     </div>
+     </div>
+     <div class="panel panel-info">
+     <a class="panel-heading collapsed" role="tab" id="headingCobro" data-toggle="collapse" data-parent="#accordionReserva" href="#collapseCobro" aria-expanded="false" aria-controls="collapseCobro">
+     <h4 class=""><i class="fa fa-dollar"></i> Cobro</h4>
+     </a>
+     <div id="collapseCobro" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCobro" aria-expanded="false" style="height: 0px;">
+     <div class="panel-body">
+     <!-- contenido panel accordion -->
+     <form class="form-vertical" id="formCobro" >
+     <div class="form-group">
+     <div class="input-group col-sm-3" id="inputgroupMontoPagareGtia">
+     <label class="" for="inputMontoPagareGtia">Monto Pagare Garantia</label>
+     <input class="campo montojqInputMask form-control" id="inputMontoPagareGtia" name="montoPagareGtia" type="text" maxlength="13" placeholder="p.e. $ 150.00" >
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-3" id="inputgroupMontoCosto">
+     <label class="" for="inputMontoCosto">Monto Costo Alquiler</label>
+     <input class="campo montojqInputMask form-control" id="inputMontoCosto" name="montoCosto" type="text" maxlength="13" placeholder="p.e. $ 150.00" >
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-3" id="inputgroupMontoAbonado">
+     <label class="" for="inputMontoAbonado">Monto abonado</label>
+     <input class="campo montojqInputMask form-control" id="inputMontoAbonado" name="montoAbonado" type="text" maxlength="13" placeholder="p.e. $ 150.00" >
+     </div>
+     </div>
+     <br>
+     <!-- i-Check control toogle-->
+     <div class="form-group">
+     <label>
+     <input id="checkDescuentoAprobadoComisionEva" name="descuentoAprobadoComisionEva" type="checkbox" class="js-switch campo" unchecked="unchecked" data-switchery="true" style="display: none;"> Descuento aprobado por comision evaluadora?
+     </label>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-3" id="inputgroupDescuentoConcedido">
+     <label class="" for="inputDescuentoConcedido">Descuento concedido</label>
+     <input class="campo porcentajejqInputMask form-control" id="inputDescuentoConcedido" name="descuentoConcedido" type="text" maxlength="7" placeholder="p.e. 10.00 %" >
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-12" id="inputGroupCateringOrganizacion">
+     <label for="selectCateringOrganizacion">Empresa de Catering </label><br>
+     <select id="selectCateringOrganizacion" class="form-control select2Control campo" name="cateringOrganizacion" tabindex="-1">
+     </select>
+     </div>
+     </div>
+     <br>
+     <!-- i-Check control toogle-->
+     <div class="form-group">
+     <label>
+     <input id="checkPresentoComprobDepositoCatering" name="presentoComprobDeposito" type="checkbox" class="js-switch campo" unchecked="unchecked" data-switchery="true" style="display: none;"> Presento Comprob. de Deposito?
+     </label>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-3" id="inputgroupCanonCatering">
+     <label class="" for="inputCanonCatering">Canon que abona Emp. Catering</label>
+     <input class="campo porcentajejqInputMask form-control" id="inputCanonCatering" name="canonCatering" type="text" maxlength="7" placeholder="p.e. 10.00 %" >
+     </div>
+     </div>
+     <br>
+     </form>
+     </div>
+     </div>
+     </div>
+     <div class="panel panel-info">
+     <a class="panel-heading" role="tab" id="headingEspacios" data-toggle="collapse" data-parent="#accordionReserva" href="#collapseEspacios" aria-expanded="true" aria-controls="collapseEspacios">
+     <h4 class=""><i class="fa fa-building"></i> Espacios a Reservar <span class="badge badge-pill badge-default pull-right contadorItems">1</span></h4>
+    
+     </a>
+     <div id="collapseEspacios" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingEspacios" aria-expanded="true" style="">
+     <div class="panel-body">
+     <!-- contenido panel accordion -->
+     <form class="form-vertical" id="formEspacios" >
+     <div class="repeater repeater-wrap">
+     <div data-repeater-list="reservas" class="repeatable">
+     <div data-repeater-item class="">
+     <div class="form-group">
+     <div class="input-group col-sm-12" name="inputGroupEspacio">
+     <label>Espacio </label><br>
+     <select class="form-control select2Control campo" name="espacio" tabindex="-1">
+     </select>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-2" id="inputGroupParticipantes">
+     <label>Participantes</label>
+     <input class="campo numerojqInputMask form-control" name="participantes" type="number" maxlength="255" placeholder="p.e. 50" >
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-12" name="inputGroupFormatoEvento">
+     <label>Formato de Evento </label><br>
+     <select class="form-control select2Control campo" name="formatoEvento" tabindex="-1">
+     </select>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-5">
+     <label>Fec. Inicio </label>
+     <div class="input-group date col-sm-5" name="inputGroupFechaInicio">
+     <input class="form-control dateField campo col-sm-3" name="fechaInicio"  type="text">
+     <span class="input-group-addon">
+   <span class="fa fa-calendar-o"></span>
+   </span>
+     </div>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-5">
+     <label>Hora Inicio</label>
+     <div class="input-group date col-sm-5" name="inputGroupHoraInicio">
+     <input type="text" class="form-control timeField" name="horaInicio">
+     <span class="input-group-addon">
+   <span class="fa fa-clock-o"></span>
+   </span>
+     </div>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-5">
+     <label for="inputFechaFin">Fec. Fin</label>
+     <div class="input-group date col-sm-5" name="inputGroupFechaFin2">
+     <input type="text" class="form-control dateField col-sm-4" name="fechaFin">
+     <span class="input-group-addon">
+   <span class="fa fa-calendar-o"></span>
+   </span>
+     </div>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-5">
+     <label for="inputHoraFinEvento">Hora Fin</label>
+     <div class="input-group date col-sm-5" name="inputGroupHoraFin">
+     <input type="text" class="form-control timeField" id="inputHoraFin" name="horaFin">
+     <span class="input-group-addon">
+   <span class="fa fa-clock-o"></span>
+   </span>
+     </div>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-2" id="inputGroupHorasMontaje">
+     <label>Horas de Montaje</label>
+     <input class="campo numerojqInputMask form-control" name="horasMontaje" type="number" maxlength="255" placeholder="p.e. 12" >
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-2" id="inputGroupHorasDesmontaje">
+     <label>Horas de Desmontaje</label>
+     <input class="campo numerojqInputMask form-control" name="horasDesmontaje" type="number" maxlength="255" placeholder="p.e. 6" >
+     </div>
+     </div>
+     <br>
+     <fieldset name="elementosMultipleOption" class="">
+     <legend class="" style="font-size:16px;">Requisitos Tecnicos <span class="asterixField" style="color:red">(*)</span></legend>
+     <div class="checkbox">
+     <label class="">
+     <div class="icheckbox_flat-green checked" style="position: relative;">
+     <input type="checkbox" class="flat" checked="checked" name="requiereEquipoSonido" style="position: absolute; opacity: 0;">
+     <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
+     </ins>
+     </div> Consola de Sonido y Amplificación
+     </label>
+     </div>
+     <br>
+     <div class="checkbox">
+     <label>
+     <div class="icheckbox_flat-green checked" style="position: relative;">
+     <input type="checkbox" class="flat" checked="checked" name="requiereProyectorVideo" style="position: absolute; opacity: 0;">
+     <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
+     </ins>
+     </div> Proyector de Video
+     </label>
+     </div>
+     <br>
+     <div class="checkbox">
+     <label>
+     <div class="icheckbox_flat-green checked" style="position: relative;">
+     <input type="checkbox" class="flat" checked="checked" name="requiereMesas" style="position: absolute; opacity: 0;">
+     <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
+     </ins>
+     </div> Mesas
+     </label>
+     </div>
+     <br>
+     <div class="checkbox">
+     <label>
+     <div class="icheckbox_flat-green checked" style="position: relative;">
+     <input type="checkbox" class="flat" checked="checked" name="requiereSillas" style="position: absolute; opacity: 0;">
+     <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
+     </ins>
+     </div> Sillas
+     </label>
+     </div>
+     <br>
+     <div class="checkbox">
+     <label>
+     <div class="icheckbox_flat-green checked" style="position: relative;">
+     <input type="checkbox" class="flat" checked="checked" name="requiereCopas" style="position: absolute; opacity: 0;">
+     <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
+     </ins>
+     </div> Copas
+     </label>
+     </div>
+     <br>
+     <div class="checkbox">
+     <label>
+     <div class="icheckbox_flat-green checked" style="position: relative;">
+     <input type="checkbox" class="flat" checked="checked" name="requiereWifi" style="position: absolute; opacity: 0;">
+     <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
+     </ins>
+     </div> Wifi
+     </label>
+     </div>
+     <br>
+     </fieldset>
+    
+     <label>Otros</label>
+     <textarea class="resizable_textarea campo form-control" name="otrosRequisitos" cols="80" rows="3" placeholder="Una anotacion...">
+   </textarea>
+     <br>
+     <!-- Boton Quitar -->
+     <span data-repeater-delete="" class="btn btn-danger btn-sm">
+   <span class="glyphicon glyphicon-remove">
+   </span> Quitar
+   </span>
+     </div>
+     <!-- data-repeater-item-->
+     </div>
+     <!-- data-repeater-list-->
+     <!-- Boton Agregar -->
+     <br>
+     <span data-repeater-create="" class="btn btn-info btn-md">
+   <span class="glyphicon glyphicon-plus">
+   </span> Agregar
+   </span>
+     </div>
+     <!-- wrap-repeatable-->
+     </form>
+     </div>
+     </div>
+     </div>
+     <div class="panel panel-info">
+     <a class="panel-heading" role="tab" id="headingInformacionAdministrativa" data-toggle="collapse" data-parent="#accordionReserva" href="#collapseInformacionAdministrativa" aria-expanded="true" aria-controls="collapseInformacionAdministrativa">
+     <h4 class=""><i class="fa fa-list-alt"></i> Información Administrativa</h4>
+     </a>
+     <div id="collapseInformacionAdministrativa" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree" aria-expanded="true" style="">
+     <div class="panel-body">
+     <!-- contenido panel accordion -->
+     <form class="form-vertical" id="formAdministrativo" >
+     <div class="form-group">
+     <div class="input-group col-sm-12" id="inputGroupNegociadorReserva">
+     <label for="selectNegociadorReserva">Quién negoció esta Reserva? </label><br>
+     <select id="selectNegociadorReserva" class="form-control select2Control campo" name="negociadorReserva" tabindex="-1">
+     </select>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-5">
+     <label for="inputFechaNegociacionReserva">Fec. Negociación</label>
+     <div class="input-group date col-sm-5" id="inputGroupFechaNegociacionReserva">
+     <input type="text" class="form-control dateField" id="inputFechaNegociacionReserva" name="fechaNegociacionReserva">
+     <span class="input-group-addon">
+   <span class="fa fa-calendar-o"></span>
+   </span>
+     </div>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-5">
+     <label for="inputHoraNegociacionReserva">Hora Negociación</label>
+     <div class="input-group date col-sm-5" id="inputGroupHoraNegociacionReserva">
+     <input type="text" class="form-control timeField" id="inputHoraNegociacionReserva" name="horaNegociacionReserva">
+     <span class="input-group-addon">
+   <span class="fa fa-clock-o"></span>
+   </span>
+     </div>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-12" id="inputGroupTomadorReserva">
+     <label for="selectTomadorReserva">Quién registró esta Reserva? </label><br>
+     <select id="selectTomadorReserva" class="form-control select2Control campo" name="tomadorReserva" tabindex="-1">
+     </select>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-5">
+     <label for="inputFechaTomaReserva">Fec. Reserva</label>
+     <div class="input-group date col-sm-5" id="inputGroupFechaReserva">
+     <input type="text" class="form-control dateField" id="inputFechaTomaReserva" name="fechaReserva">
+     <span class="input-group-addon">
+   <span class="fa fa-calendar-o"></span>
+   </span>
+     </div>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <div class="input-group col-sm-5">
+     <label for="inputHoraTomaReserva">Hora Reserva</label>
+     <div class="input-group date col-sm-5" id="inputGroupHoraReserva">
+     <input type="text" class="form-control timeField" id="inputHoraTomaReserva" name="horaReserva">
+     <span class="input-group-addon">
+   <span class="fa fa-clock-o"></span>
+   </span>
+     </div>
+     </div>
+     </div>
+     <br>
+     <div class="form-group">
+     <label>
+     <input id="checkReservaPermanente" name="reservaPermanente" type="checkbox" class="js-switch campo" unchecked="unchecked" data-switchery="true"> Reserva confirmada como permanente?
+     </label>
+     </div>
+     <br>
+     </form>
+     </div>
+     </div>
+     </div>
+     </div>
+     <!-- end of accordion -->
+     </div>
+     <div class="row">
+     <div class="col-md-7 col-sm-7 col-xs-7"></div>
+     <div class="col-md-5 col-sm-5 col-xs-5 center-block">
+     <button id ="btnGuardar" type="button" class="btn-lg btn-primary">Guardar Todo</button>
+     <button id ="btnCancelar" type="button" class="btn-lg btn-default">Cancelar</button>
+     </div>
+     </div>
+    
+     </div>
+     </div>
+     </div>
+     </div>
+     </div>
+     <!-- /page content -->
+     <!-- footer content -->
+     <footer>
+     <div class="pull-right">
+     Sistema Web de Reservas para Centro de Convenciones&nbsp;-&nbsp;<a href="martinmurciego@hotmail.com">martinmurciego@hotmail.com</a>
+     </div>
+     <div class="clearfix"></div>
+     </footer>
+     <!-- /footer content -->
+     </div>
+ <!-- jQuery -->
+ <script src="../vendors/jquery/dist/jquery.min.js"></script>
+ <!-- Bootstrap -->
+ <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+ <!-- FastClick (Pollyfill) is a simple, easy-to-use library for eliminating the 300ms delay between a physical tap and the firing of a click event on mobile browsers-->
+ <script src="../vendors/fastclick/lib/fastclick.js"></script>
+ <!-- NProgress -->
+ <script src="../vendors/nprogress/nprogress.js"></script>
+ <!-- Switchery Check tipo toggle como en mobile-->
+ <script src="../vendors/switchery/dist/switchery.min.js"></script>
+ <!-- iCheck -->
+ <script src="../vendors/iCheck/icheck.min.js"></script>
+ <!-- select2 -->
+ <!-- <script src="/vendors/select2/dist/js/select2.full.min.js"></script> -->
+ <script src="../vendors/select2/dist/js/select2.min.js"></script>
+ <!-- moment.js / locale para spanish para manejo de fechas-->
+ <script src="../vendors/moment/min/moment.min.js"></script>
+ <script src="../vendors/moment/locale/es.js"></script>
+ <!-- Bootstrap Date Picker -->
+ <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+ <!-- Jquery Input Mask 4.x de Robin Herbots-->
+ <script src="../vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+ <script src="../vendors/jquery.inputmask/dist/min/inputmask/jquery.inputmask.min.js"></script>
+ <script src="../vendors/jquery.inputmask/dist/min/inputmask/inputmask.extensions.min.js"></script>
+ <script src="../vendors/jquery.inputmask/dist/min/inputmask/inputmask.numeric.extensions.min.js"></script>
+ <script src="../vendors/jquery.inputmask/dist/min/inputmask/inputmask.date.extensions.min.js"></script>
+ <script src="../vendors/jquery.inputmask/dist/min/inputmask/inputmask.phone.extensions.min.js"></script>
+ <script src="../vendors/jquery.inputmask/dist/min/inputmask/jquery.inputmask.min.js"></script>
+ <script src="../vendors/jquery.inputmask/dist/min/inputmask/phone.min.js"></script>
+
+ <!-- Bootbox modal dialog bootstrap  -->
+ <script src="../vendors/bootbox/bootbox.min.js"></script>
+ <!-- jquery.repeater -->
+ <script src="../vendors/jquery.repeater/jquery.repeater.min.js"></script>
+
+ <!-- Custom Theme Scripts -->
+ <script src="../build/js/custom.min.js"></script>
+ </body>
+
+ </html>

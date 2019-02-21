@@ -87,7 +87,6 @@ var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
     $NAV_MENU = $('.nav_menu'),
     $FOOTER = $('footer');
 
-
 // TODO: This is some kind of easy fix, maybe we can improve this
 var setContentHeight = function () {
     // reset height
@@ -106,15 +105,20 @@ var setContentHeight = function () {
 
 // Sidebar
 function init_sidebar() {
-  $('li ul.child_menu').mCustomScrollbar({
-        autoHideScrollbar: true,
-        theme: 'minimal',
-        scrollInertia: 600,
-        mouseWheel: {
-            preventDefault: true,
-            scrollAmount: 40
+    /*$('ul.nav.side-menu > li > ul.nav.child_menu').each(function () {
+        if ($(this).find('.child_menu').length) {
+            $(this).mCustomScrollbar({
+                autoHideScrollbar: true,
+                theme: 'minimal',
+                scrollInertia: 600,
+                mouseWheel: {
+                    preventDefault: true,
+                    scrollAmount: 40
+                }
+            });
         }
-    });
+    });*/
+
     $SIDEBAR_MENU.find('a').on('click', function (ev) {
         var $li = $(this).parent();
         if ($li.is('.active')) {
@@ -124,7 +128,7 @@ function init_sidebar() {
             });
         } else {
             // prevent closing menu if we are on child menu
-            if (!$li.parent().is('.child_menu') && !$li.parents('.mCustomScrollbar').hasClass('child_menu')) {
+            if (!$li.parent().is('.child_menu')) {
                 $SIDEBAR_MENU.find('li').removeClass('active active-sm');
                 $SIDEBAR_MENU.find('li ul').slideUp();
             } else {
