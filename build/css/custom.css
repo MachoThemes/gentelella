@@ -766,10 +766,11 @@ table.no-margin .progress {
     padding-left: 10px
 }
 
-.row {
+/* TODO Commented line to be deleted */
+/*.row {
     margin-right: -10px;
     margin-left: -10px
-}
+}*/
 
 .grid_slider .col-md-6 {
     padding: 0 40px
@@ -1329,7 +1330,8 @@ h2 {
 }
 
 .x_content h4 {
-    font-size: 16px;
+    /* TODO commented line to be deleted */
+    /*font-size: 16px;*/
     font-weight: 500
 }
 
