@@ -2628,10 +2628,11 @@ legend {
     color: inherit
 }
 
-.form-horizontal .form-group {
+/* TODO Commented text to be deleted */
+/*.form-horizontal .form-group {
     margin-right: 0;
     margin-left: 0
-}
+}*/
 
 .form-control-feedback {
     margin-top: 8px;
