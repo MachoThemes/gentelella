@@ -1509,7 +1509,8 @@ td span {
     width: 370px;
     margin: 0 auto;
     text-align: center;
-    padding: 10px 20px
+    padding: 10px 20px;
+    max-width:100%;
 }
 
 h3.degrees {
